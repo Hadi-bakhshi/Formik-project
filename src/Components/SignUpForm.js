@@ -14,9 +14,13 @@ const SignUpForm = () => {
     });
   };
 
+  const submitHandler = (e)=>{
+    e.preventDefault();
+  }
+
   return (
     <div>
-      <form>
+      <form onSubmit={submitHandler}>
         <div className="formControl">
           <label>Name</label>
           <input
@@ -44,7 +48,7 @@ const SignUpForm = () => {
             onChange={changeHadler}
           />
         </div>
-        <button>Sign up</button>
+        <button type="submit">Sign up</button>
       </form>
     </div>
   );
