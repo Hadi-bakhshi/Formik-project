@@ -25,26 +25,14 @@ const SignUpForm = () => {
       <form onSubmit={formik.handleSubmit}>
         <div className="formControl">
           <label>Name</label>
-          <input
-            type="text"
-            value={formik.values.name}
-            name="name"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          />
+          <input type="text" name="name" {...formik.getFieldProps("name")} />
           {formik.errors.name && formik.touched.name && (
             <div className="error">{formik.errors.name}</div>
           )}
         </div>
         <div className="formControl">
           <label>Email</label>
-          <input
-            type="email"
-            value={formik.values.email}
-            name="email"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          />
+          <input type="email" name="email" {...formik.getFieldProps("email")} />
           {formik.errors.email && formik.touched.email && (
             <div className="error">{formik.errors.email}</div>
           )}
@@ -53,10 +41,8 @@ const SignUpForm = () => {
           <label>Password</label>
           <input
             type="password"
-            value={formik.values.password}
             name="password"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
+            {...formik.getFieldProps("password")}
           />
           {formik.errors.password && formik.touched.password && (
             <div className="error">{formik.errors.password}</div>
