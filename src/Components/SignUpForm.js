@@ -2,9 +2,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string()
+    .required("Name is required")
+    .min(6, "Name must be at least 6 characters"),
   email: Yup.string().email("Email is not valid").required("Email is required"),
+  phoneNumber: Yup.string()
+    .required("Phone number is required")
+    .matches(/^[0-9]{11}$/, "Phone number is not valid")
+    .nullable(),
+
   password: Yup.string().required("Password is required"),
+  passwordConfirm: Yup.string()
+    .required("Password confirmation is required")
+    .oneOf([Yup.ref("password"), null], "password must match"),
 });
 
 const SignUpForm = () => {
@@ -12,7 +22,9 @@ const SignUpForm = () => {
     initialValues: {
       name: "",
       email: "",
+      phoneNumber: "",
       password: "",
+      passwordConfirm: "",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -38,6 +50,17 @@ const SignUpForm = () => {
           )}
         </div>
         <div className="formControl">
+          <label>Phone number</label>
+          <input
+            type="text"
+            name="phoneNumber"
+            {...formik.getFieldProps("phoneNumber")}
+          />
+          {formik.errors.phoneNumber && formik.touched.phoneNumber && (
+            <div className="error">{formik.errors.phoneNumber}</div>
+          )}
+        </div>
+        <div className="formControl">
           <label>Password</label>
           <input
             type="password"
@@ -46,6 +69,17 @@ const SignUpForm = () => {
           />
           {formik.errors.password && formik.touched.password && (
             <div className="error">{formik.errors.password}</div>
+          )}
+        </div>
+        <div className="formControl">
+          <label>Password Confirmation</label>
+          <input
+            type="password"
+            name="passwordConfirm"
+            {...formik.getFieldProps("passwordConfirm")}
+          />
+          {formik.errors.passwordConfirm && formik.touched.passwordConfirm && (
+            <div className="error">{formik.errors.passwordConfirm}</div>
           )}
         </div>
         <button type="submit">Sign up</button>
