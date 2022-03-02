@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Hadi bakhshi",
+      "email": "hadi@tst.com",
+      "phoneNumber": "09301377887",
+      "password": "85858585",
+      "passwordConfirm": "85858585",
+      "gender": "0"
+    }
+  ]
+}
