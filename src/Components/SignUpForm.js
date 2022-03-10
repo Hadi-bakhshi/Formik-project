@@ -4,10 +4,17 @@ import * as Yup from "yup";
 import axios from "axios";
 import Input from "./common/Input";
 import RadioInput from "./common/RadioInput";
+import SelectComponent from "./common/SelectComponent";
 
 const radioOptions = [
   { label: "Male", value: "0" },
   { label: "Female", value: "1" },
+];
+const selectOptions = [
+  { label: "Select Nationality", value: "" },
+  { label: "Iranian", value: "IR" },
+  { label: "German", value: "GER" },
+  { label: "American", value: "US" },
 ];
 
 const initialValues = {
@@ -17,6 +24,7 @@ const initialValues = {
   password: "",
   passwordConfirm: "",
   gender: "",
+  nationality: "",
 };
 
 const validationSchema = Yup.object({
@@ -34,6 +42,7 @@ const validationSchema = Yup.object({
     .required("Password confirmation is required")
     .oneOf([Yup.ref("password"), null], "password must match"),
   gender: Yup.string().required("Gender must be choosen"),
+  nationality: Yup.string().required("Choose your nationality"),
 });
 
 const SignUpForm = () => {
@@ -73,6 +82,11 @@ const SignUpForm = () => {
           name="passwordConfirm"
           label="Password Confirmation"
           type="password"
+        />
+        <SelectComponent
+          selectOptions={selectOptions}
+          name="nationality"
+          formik={formik}
         />
         <RadioInput formik={formik} name="gender" radioOptions={radioOptions} />
         <button type="submit" disabled={!formik.isValid}>
