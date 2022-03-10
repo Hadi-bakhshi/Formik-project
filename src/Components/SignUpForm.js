@@ -5,7 +5,12 @@ import axios from "axios";
 import Input from "./common/Input";
 import RadioInput from "./common/RadioInput";
 import SelectComponent from "./common/SelectComponent";
+import CheckBox from "./common/CheckBox";
 
+const CheckBoxOptions = [
+  { label: "React.js", value: "react" },
+  { label: "Vue.js", value: "vue" },
+];
 const radioOptions = [
   { label: "Male", value: "0" },
   { label: "Female", value: "1" },
@@ -25,6 +30,8 @@ const initialValues = {
   passwordConfirm: "",
   gender: "",
   nationality: "",
+  interests: [],
+  terms: false,
 };
 
 const validationSchema = Yup.object({
@@ -43,6 +50,10 @@ const validationSchema = Yup.object({
     .oneOf([Yup.ref("password"), null], "password must match"),
   gender: Yup.string().required("Gender must be choosen"),
   nationality: Yup.string().required("Choose your nationality"),
+  interests: Yup.array().min(1).required("Choose one at least"),
+  terms: Yup.boolean()
+    .required("Terms and conditions must be accepted.")
+    .oneOf([true], "The terms and conditions must be accepted."),
 });
 
 const SignUpForm = () => {
@@ -51,7 +62,7 @@ const SignUpForm = () => {
   const formik = useFormik({
     initialValues: formValues || initialValues,
     onSubmit: (values) => {
-      console.log(values);
+      axios.post("http://localhost:3001/users/1")
     },
     validationSchema,
     validateOnMount: true,
@@ -89,6 +100,23 @@ const SignUpForm = () => {
           formik={formik}
         />
         <RadioInput formik={formik} name="gender" radioOptions={radioOptions} />
+        <CheckBox
+          formik={formik}
+          CheckBoxOptions={CheckBoxOptions}
+          name="interests"
+        />
+        <input
+          type="checkbox"
+          id="terms"
+          name="terms"
+          value={true}
+          onChange={formik.handleChange}
+          checked={formik.values.terms}
+        />
+        <label htmlFor="terms">Accept the terms and conditions</label>
+        {formik.errors.terms && formik.touched.terms && (
+          <div className="error">{formik.errors.terms}</div>
+        )}
         <button type="submit" disabled={!formik.isValid}>
           Sign up
         </button>

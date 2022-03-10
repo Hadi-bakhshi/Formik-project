@@ -8,7 +8,9 @@
       "password": "85858585",
       "passwordConfirm": "85858585",
       "gender": "0",
-      "nationality": "US"
+      "nationality": "US",
+      "interests":["react"],
+      "terms":false
     }
   ]
 }
