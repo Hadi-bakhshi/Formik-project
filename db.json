@@ -1,16 +1,18 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Hadi bakhshi",
-      "email": "hadi@tst.com",
+      "name": "Hadi Bakhshi",
+      "email": "hadibakhshi277@gmail.com",
       "phoneNumber": "09301377887",
-      "password": "85858585",
-      "passwordConfirm": "85858585",
+      "password": "986532",
+      "passwordConfirm": "986532",
       "gender": "0",
-      "nationality": "US",
-      "interests":["react"],
-      "terms":false
+      "nationality": "IR",
+      "interests": [
+        "react"
+      ],
+      "terms": true,
+      "id": 1
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import axios from "axios";
@@ -6,6 +6,10 @@ import Input from "./common/Input";
 import RadioInput from "./common/RadioInput";
 import SelectComponent from "./common/SelectComponent";
 import CheckBox from "./common/CheckBox";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const CheckBoxOptions = [
   { label: "React.js", value: "react" },
@@ -62,7 +66,21 @@ const SignUpForm = () => {
   const formik = useFormik({
     initialValues: formValues || initialValues,
     onSubmit: (values) => {
-      axios.post("http://localhost:3001/users/1")
+      axios
+        .post("http://localhost:3001/users/", values)
+        .then(
+          formik.resetForm(),
+          MySwal.fire({
+            title: <p>Now you can sign in</p>,
+            footer: "Copyright 2018",
+            didOpen: () => {
+              MySwal.clickConfirm();
+            },
+          }).then(() => {
+            return MySwal.fire(<p>Signup was successful</p>);
+          })
+        )
+        .catch(MySwal.fire("Error", "Something went wrong", "error"));
     },
     validationSchema,
     validateOnMount: true,
@@ -70,10 +88,10 @@ const SignUpForm = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/users/1")
-      .then((res) => setFormValues(res.data))
-      .catch((err) => console.log(err));
+    // axios
+    //   .get("http://localhost:3001/users/1")
+    //   .then((res) => setFormValues(res.data))
+    //   .catch((err) => console.log(err));
   }, []);
 
   return (
